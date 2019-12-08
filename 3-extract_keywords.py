@@ -1,12 +1,13 @@
 #coding=utf-8
 from sklearn.feature_extraction.text import TfidfVectorizer
 import sys
+from collections import defaultdict
 
 if __name__ == "__main__":
     input_file = sys.argv[1]
     output_file = sys.argv[2]
     corpus = list()
-    data = dict()
+    data = defaultdict(list)
     with open(input_file, 'r') as fin:
         for line in fin.readlines():
             try:
@@ -14,11 +15,7 @@ if __name__ == "__main__":
                 date = info[1].split('-')[0]
                 content = ' '.join(info[3:])
                 corpus.append(content)
-                if date in data:
-                    data[date].append(content)
-                else:
-                    data[date] = list()
-                    data[date].append(content)
+                data[date].append(content)
             except:
                 print("Bad line[%s]"%line.strip())
                 continue
